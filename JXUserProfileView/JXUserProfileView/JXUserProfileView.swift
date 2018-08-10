@@ -40,14 +40,14 @@ import UIKit
 class JXUserProfileView: UIView {
     open var listContainerView: JXUserProfileListContainerView!
     unowned var delegate: JXUserProfileViewDelegate
-    fileprivate var mainTableView: JXUserProfileMainTableView!
-    fileprivate var listItemScrollView: UIScrollView?
+    var mainTableView: JXUserProfileMainTableView!
+    fileprivate var currentScrollingListView: UIScrollView?
 
     init(delegate: JXUserProfileViewDelegate) {
         self.delegate = delegate
         super.init(frame: CGRect.zero)
 
-        setupViews()
+        initializeViews()
     }
 
     @available(*, unavailable)
@@ -55,7 +55,7 @@ class JXUserProfileView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    fileprivate func setupViews(){
+    fileprivate func initializeViews(){
 
         mainTableView = JXUserProfileMainTableView(frame: CGRect.zero, style: .plain)
         mainTableView.showsVerticalScrollIndicator = false
@@ -80,7 +80,7 @@ class JXUserProfileView: UIView {
 
     /// 外部传入的listView，当其内部的scrollView滚动时，需要调用该方法
     open func listViewDidScroll(scrollView: UIScrollView) {
-        self.listItemScrollView = scrollView
+        self.currentScrollingListView = scrollView
 
         if (self.mainTableView.contentOffset.y < self.delegate.tableHeaderViewHeight(in: self)) {
             //mainTableView的header还没有消失，让listScrollView一直为0
@@ -127,7 +127,7 @@ extension JXUserProfileView: UITableViewDataSource, UITableViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.delegate.mainTableViewDidScroll?(scrollView)
 
-        if (self.listItemScrollView != nil && self.listItemScrollView!.contentOffset.y > 0) {
+        if (self.currentScrollingListView != nil && self.currentScrollingListView!.contentOffset.y > 0) {
             //mainTableView的header已经滚动不见，开始滚动某一个listView，那么固定mainTableView的contentOffset，让其不动
             self.mainTableView.contentOffset = CGPoint(x: 0, y: self.delegate.tableHeaderViewHeight(in: self))
         }

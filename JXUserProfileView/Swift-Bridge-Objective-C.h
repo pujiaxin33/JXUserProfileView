@@ -7,3 +7,4 @@
 //
 
 #import "JXCategoryView.h"
+#import "MJRefresh.h"

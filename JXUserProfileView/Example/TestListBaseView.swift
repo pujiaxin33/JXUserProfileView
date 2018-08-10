@@ -27,6 +27,8 @@ class TestListBaseView: UIView {
         tableView.delegate = self
         tableView.register(UITableViewCell.classForCoder(), forCellReuseIdentifier: "cell")
         addSubview(tableView)
+
+        tableView.mj_footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMore))
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -37,6 +39,14 @@ class TestListBaseView: UIView {
         super.layoutSubviews()
 
         tableView.frame = self.bounds
+    }
+
+    @objc func loadMore() {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + DispatchTimeInterval.seconds(2)) {
+            self.dataSource?.append("加载更多成功")
+            self.tableView.reloadData()
+            self.tableView.mj_footer.endRefreshing()
+        }
     }
 
 }
