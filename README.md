@@ -1,7 +1,9 @@
 # JXUserProfileView
 iOS：一分钟集成主流APP个人资料页（如简书、微博等）
 
-![个人中心示意图](https://upload-images.jianshu.io/upload_images/1085173-3f9189ec31d470f1.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/750)
+## 仓库迁移
+
+**本仓库已经停止更新，所有代码已经迁移至[JXPagingView](https://github.com/pujiaxin33/JXPagingView)**
 
 ## Github
 [仓库地址](https://github.com/pujiaxin33/JXUserProfileView) 如果你喜欢，记得点颗❤️哟
